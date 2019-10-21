@@ -1,0 +1,27 @@
+{
+    "name": "rezozero/crypto",
+    "description": "Cryptographic lib for PHP projects and Roadiz",
+    "type": "library",
+    "require": {
+        "paragonie/halite": "^4.6",
+        "php": ">=7.2",
+        "ext-sodium": "*",
+        "beberlei/assert": "^3.2",
+        "doctrine/dbal": "^2.9"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ambroise Maupate",
+            "email": "ambroise@rezo-zero.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RZ\\Crypto\\": "src/"
+        }
+    },
+    "require-dev": {
+        "atoum/atoum": "^3.3"
+    }
+}
