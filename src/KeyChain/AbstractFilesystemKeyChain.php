@@ -25,7 +25,6 @@ abstract class AbstractFilesystemKeyChain implements KeyChainInterface
                 ->writeable()
                 ->readable()
                 ->notEq(sys_get_temp_dir(), 'Key cannot be stored in system temporary folder.');
-
         }
         $this->folder = $folder;
     }

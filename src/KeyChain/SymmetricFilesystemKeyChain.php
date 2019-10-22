@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace RZ\Crypto\KeyChain;
 
+use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\FileError;
 use ParagonIE\Halite\Key;
 use ParagonIE\Halite\KeyFactory;
@@ -24,8 +25,12 @@ class SymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      */
     public function generate(string $keyName): Key
     {
-        $encKey = KeyFactory::generateEncryptionKey();
-        $this->save($encKey, $keyName);
+        try {
+            $encKey = $this->get($keyName);
+        } catch (CannotPerformOperation $e) {
+            $encKey = KeyFactory::generateEncryptionKey();
+            $this->save($encKey, $keyName);
+        }
         return $encKey;
     }
 
