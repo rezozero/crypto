@@ -65,7 +65,7 @@ SELECT %s FROM %s
 WHERE %s = :keyName
 LIMIT 1;
 EOT
-        ), $this->keyContentColumn, $this->tableName, $this->keyNameColumn);
+        , $this->keyContentColumn, $this->tableName, $this->keyNameColumn));
         $statement->bindParam(':keyName', $keyName);
         $keyContent = $statement->fetchColumn();
         if (false === $keyContent) {
