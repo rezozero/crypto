@@ -5,9 +5,14 @@ sudo: required
 php:
 - 7.2
 - 7.3
+- 7.4
+
+before_install:
+- curl -s http://getcomposer.org/installer | php
+# Fix Argon2i password hasher in TravisCi PHP version
+- composer require paragonie/sodium_compat
 
 install:
-- curl -s http://getcomposer.org/installer | php
 - php composer.phar install --dev --no-interaction
 
 script:
