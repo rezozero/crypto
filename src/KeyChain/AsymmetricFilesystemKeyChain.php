@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace RZ\Crypto\KeyChain;
 
+use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\FileError;
+use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Asymmetric\EncryptionPublicKey;
 use ParagonIE\Halite\Asymmetric\EncryptionSecretKey;
 use ParagonIE\Halite\Key;
 use ParagonIE\Halite\KeyFactory;
+use RuntimeException;
 
 /**
  * One plain clear file per key.
@@ -21,7 +24,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      *
      * @return Key
      * @throws FileError
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws InvalidKey
      */
     public function generate(string $keyName): Key
     {
@@ -35,8 +38,8 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @param string $keyName
      *
      * @return Key
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws CannotPerformOperation
+     * @throws InvalidKey
      */
     public function get(string $keyName): Key
     {
@@ -47,8 +50,8 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @param string $keyName
      *
      * @return EncryptionPublicKey
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws CannotPerformOperation
+     * @throws InvalidKey
      */
     public function getPublic(string $keyName): EncryptionPublicKey
     {
@@ -61,12 +64,16 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @param string $keyName
      *
      * @return EncryptionSecretKey
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws CannotPerformOperation
+     * @throws InvalidKey
      */
     public function getPrivate(string $keyName): EncryptionSecretKey
     {
-        return $this->get($keyName);
+        $key = $this->get($keyName);
+        if ($key instanceof EncryptionSecretKey) {
+            return $key;
+        }
+        throw new RuntimeException('Private key must be an instance of '.EncryptionSecretKey::class);
     }
 
     /**

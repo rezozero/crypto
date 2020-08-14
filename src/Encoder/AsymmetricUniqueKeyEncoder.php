@@ -61,9 +61,9 @@ class AsymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
     }
 
     /**
-     * @return EncryptionPublicKey
+     * @return EncryptionPublicKey|null
      */
-    public function getPublicKey(): EncryptionPublicKey
+    public function getPublicKey(): ?EncryptionPublicKey
     {
         return $this->publicKey;
     }
@@ -81,9 +81,9 @@ class AsymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
     }
 
     /**
-     * @return EncryptionSecretKey
+     * @return EncryptionSecretKey|null
      */
-    public function getPrivateKey(): EncryptionSecretKey
+    public function getPrivateKey(): ?EncryptionSecretKey
     {
         return $this->privateKey;
     }

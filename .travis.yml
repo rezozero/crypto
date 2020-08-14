@@ -3,19 +3,18 @@
 language: php
 sudo: required
 php:
-- 7.2
-- 7.3
-- 7.4
+    - 7.3
+    - 7.4
 
 before_install:
-- curl -s http://getcomposer.org/installer | php
-# Fix Argon2i password hasher in TravisCi PHP version
-- composer require paragonie/sodium_compat
+    - curl -s http://getcomposer.org/installer | php
+    # Fix Argon2i password hasher in TravisCi PHP version
+    - composer require paragonie/sodium_compat
 
 install:
-- php composer.phar install --dev --no-interaction
+    - php composer.phar install --dev --no-interaction
 
 script:
-- vendor/bin/phpcs --report=full --report-file=./report.txt --extensions=php --warning-severity=0 --standard=PSR2 -p ./src
-- vendor/bin/atoum -d tests
-- vendor/bin/phpstan analyse src
+    - vendor/bin/phpcs --report=full --report-file=./report.txt --extensions=php --warning-severity=0 --standard=PSR2 -p ./src
+    - vendor/bin/atoum -d tests
+    - vendor/bin/phpstan analyse -l max src
