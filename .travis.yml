@@ -5,6 +5,8 @@ php:
     - 7.4
     - 8.0
     - nightly
+env:
+    - XDEBUG_MODE=coverage
 before_install:
     - curl -s http://getcomposer.org/installer | php
     # Fix Argon2i password hasher in TravisCi PHP version
