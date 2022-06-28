@@ -1,9 +1,9 @@
 language: php
 sudo: required
 php:
-    - 7.3
     - 7.4
     - 8.0
+    - 8.1
     - nightly
 env:
     - XDEBUG_MODE=coverage
@@ -14,11 +14,9 @@ before_install:
 install:
     - php composer.phar install --dev --no-interaction
 script:
-    - vendor/bin/phpcs --report=full --report-file=./report.txt --extensions=php --warning-severity=0 --standard=PSR2 -p ./src
-    - vendor/bin/phpstan analyse -l max src
+    - vendor/bin/phpcs --report=full -p ./src
+    - vendor/bin/phpstan analyse -c phpstan.neon
     - vendor/bin/atoum -d tests
 jobs:
     allow_failures:
-        -   php: 7.3 # Travis fails to enable sodium
-        -   php: 8.0
         -   php: nightly

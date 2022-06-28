@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Crypto\KeyChain;
@@ -73,7 +74,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
         if ($key instanceof EncryptionSecretKey) {
             return $key;
         }
-        throw new RuntimeException('Private key must be an instance of '.EncryptionSecretKey::class);
+        throw new RuntimeException('Private key must be an instance of ' . EncryptionSecretKey::class);
     }
 
     /**

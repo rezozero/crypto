@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RZ\Crypto\KeyChain;
 
 use Doctrine\DBAL\Connection;
 use ParagonIE\Halite\Alerts\CannotPerformOperation;
+use ParagonIE\Halite\Alerts\HaliteAlertInterface;
 use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Key;
 use ParagonIE\Halite\KeyFactory;
@@ -17,20 +19,13 @@ use RZ\Crypto\Encoder\UniqueKeyEncoderInterface;
  */
 class SymmetricDatabaseKeyChain implements KeyChainInterface
 {
-    /** @var Connection */
-    private $connection;
-    /** @var string */
-    private $tableName;
-    /** @var string */
-    private $keyNameColumn;
-    /** @var string */
-    private $keyContentColumn;
-    /** @var UniqueKeyEncoderInterface */
-    private $masterEncoder;
+    private Connection $connection;
+    private string $tableName;
+    private string $keyNameColumn;
+    private string $keyContentColumn;
+    private UniqueKeyEncoderInterface $masterEncoder;
 
     /**
-     * DatabaseKeyChain constructor.
-     *
      * @param Connection                $connection
      * @param UniqueKeyEncoderInterface $masterEncoder
      * @param string                    $tableName
@@ -68,7 +63,7 @@ EOT
         , $this->keyContentColumn, $this->tableName, $this->keyNameColumn));
         $statement->bindParam(':keyName', $keyName);
         $keyContent = $statement->fetchColumn();
-        if (false === $keyContent) {
+        if (!\is_string($keyContent)) {
             throw new InvalidKey('Key content from database is not valid.');
         }
         return KeyFactory::importEncryptionKey($this->masterEncoder->decode((string) $keyContent));
@@ -94,7 +89,7 @@ EOT
     {
         try {
             $encKey = $this->get($keyName);
-        } catch (CannotPerformOperation $e) {
+        } catch (HaliteAlertInterface $e) {
             $encKey = KeyFactory::generateEncryptionKey();
             $this->save($encKey, $keyName);
         }
