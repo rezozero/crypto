@@ -8,8 +8,7 @@ use Assert\Assert;
 
 abstract class AbstractFilesystemKeyChain implements KeyChainInterface
 {
-    /** @var string */
-    protected $folder;
+    protected string $folder;
 
     /**
      * FileKeyChain constructor.

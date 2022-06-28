@@ -26,6 +26,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @return Key
      * @throws FileError
      * @throws InvalidKey
+     * @throws \SodiumException
      */
     public function generate(string $keyName): Key
     {
@@ -41,6 +42,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @return Key
      * @throws CannotPerformOperation
      * @throws InvalidKey
+     * @throws \SodiumException
      */
     public function get(string $keyName): Key
     {
@@ -53,6 +55,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @return EncryptionPublicKey
      * @throws CannotPerformOperation
      * @throws InvalidKey
+     * @throws \SodiumException
      */
     public function getPublic(string $keyName): EncryptionPublicKey
     {
@@ -67,6 +70,7 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @return EncryptionSecretKey
      * @throws CannotPerformOperation
      * @throws InvalidKey
+     * @throws \SodiumException
      */
     public function getPrivate(string $keyName): EncryptionSecretKey
     {
@@ -78,10 +82,11 @@ class AsymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
     }
 
     /**
-     * @param Key    $key
+     * @param Key $key
      * @param string $keyName
      *
      * @throws FileError
+     * @throws \SodiumException
      */
     public function save(Key $key, string $keyName): void
     {

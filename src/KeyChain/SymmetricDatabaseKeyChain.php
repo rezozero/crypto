@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace RZ\Crypto\KeyChain;
 
 use Doctrine\DBAL\Connection;
-use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\HaliteAlertInterface;
 use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Key;
@@ -55,14 +54,14 @@ class SymmetricDatabaseKeyChain implements KeyChainInterface
      */
     public function get(string $keyName): Key
     {
-        $statement = $this->connection->query(sprintf(<<< EOT
-SELECT %s FROM %s 
-WHERE %s = :keyName
-LIMIT 1;
-EOT
-        , $this->keyContentColumn, $this->tableName, $this->keyNameColumn));
-        $statement->bindParam(':keyName', $keyName);
-        $keyContent = $statement->fetchColumn();
+        $qb = $this->connection->createQueryBuilder();
+        $qb->select($this->keyContentColumn)
+            ->from($this->tableName)
+            ->andWhere($qb->expr()->eq($this->keyNameColumn, ':keyName'))
+            ->setMaxResults(1)
+            ->setParameter(':keyName', $keyName)
+        ;
+        $keyContent = $this->connection->executeQuery($qb->getSQL())->fetchOne();
         if (!\is_string($keyContent)) {
             throw new InvalidKey('Key content from database is not valid.');
         }

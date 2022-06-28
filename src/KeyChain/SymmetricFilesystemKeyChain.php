@@ -48,10 +48,11 @@ class SymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
     }
 
     /**
-     * @param Key    $key
+     * @param Key $key
      * @param string $keyName
      *
      * @throws FileError
+     * @throws \SodiumException
      */
     public function save(Key $key, string $keyName): void
     {

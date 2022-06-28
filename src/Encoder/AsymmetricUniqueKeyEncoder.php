@@ -12,10 +12,8 @@ use ParagonIE\HiddenString\HiddenString;
 
 class AsymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
 {
-    /** @var EncryptionPublicKey|null */
-    private $publicKey;
-    /** @var EncryptionSecretKey|null */
-    private $privateKey;
+    private ?EncryptionPublicKey $publicKey;
+    private ?EncryptionSecretKey $privateKey;
 
     /**
      * AsymmetricUniqueKeyEncoder constructor.
@@ -35,6 +33,7 @@ class AsymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
      * @return string
      * @throws CannotPerformOperation
      * @throws \ParagonIE\Halite\Alerts\InvalidType
+     * @throws \SodiumException
      */
     public function encode(HiddenString $toEncode): string
     {

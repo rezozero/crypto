@@ -10,12 +10,9 @@ use ParagonIE\HiddenString\HiddenString;
 
 class SymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
 {
-    /** @var EncryptionKey */
-    private $key;
+    private EncryptionKey $key;
 
     /**
-     * UniqueKeyEncoder constructor.
-     *
      * @param EncryptionKey $key
      */
     public function __construct(EncryptionKey $key)
