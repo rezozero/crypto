@@ -4,9 +4,9 @@
     "type": "library",
     "require": {
         "php": ">=7.4",
-        "paragonie/halite": "^4.6",
-        "beberlei/assert": "^3.2",
-        "doctrine/dbal": "^2.9"
+        "paragonie/halite": ">=4.6",
+        "beberlei/assert": "^3.3.2",
+        "doctrine/dbal": ">=2.9"
     },
     "license": "MIT",
     "authors": [

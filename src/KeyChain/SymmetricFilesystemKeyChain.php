@@ -6,6 +6,7 @@ namespace RZ\Crypto\KeyChain;
 
 use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\FileError;
+use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Key;
 use ParagonIE\Halite\KeyFactory;
 
@@ -21,8 +22,8 @@ class SymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      *
      * @return Key
      * @throws FileError
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws CannotPerformOperation
+     * @throws InvalidKey
      */
     public function generate(string $keyName): Key
     {
@@ -39,8 +40,8 @@ class SymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @param string $keyName
      *
      * @return Key
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidKey
+     * @throws CannotPerformOperation
+     * @throws InvalidKey
      */
     public function get(string $keyName): Key
     {
@@ -52,7 +53,6 @@ class SymmetricFilesystemKeyChain extends AbstractFilesystemKeyChain
      * @param string $keyName
      *
      * @throws FileError
-     * @throws \SodiumException
      */
     public function save(Key $key, string $keyName): void
     {

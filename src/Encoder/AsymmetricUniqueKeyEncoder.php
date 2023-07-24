@@ -33,7 +33,6 @@ class AsymmetricUniqueKeyEncoder implements UniqueKeyEncoderInterface
      * @return string
      * @throws CannotPerformOperation
      * @throws \ParagonIE\Halite\Alerts\InvalidType
-     * @throws \SodiumException
      */
     public function encode(HiddenString $toEncode): string
     {

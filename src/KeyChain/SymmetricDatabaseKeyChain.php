@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace RZ\Crypto\KeyChain;
 
 use Doctrine\DBAL\Connection;
+use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\HaliteAlertInterface;
 use ParagonIE\Halite\Alerts\InvalidKey;
+use ParagonIE\Halite\Alerts\InvalidType;
 use ParagonIE\Halite\Key;
 use ParagonIE\Halite\KeyFactory;
 use RZ\Crypto\Encoder\UniqueKeyEncoderInterface;
@@ -50,7 +52,6 @@ class SymmetricDatabaseKeyChain implements KeyChainInterface
      *
      * @return Key
      * @throws InvalidKey
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function get(string $keyName): Key
     {
@@ -69,12 +70,11 @@ class SymmetricDatabaseKeyChain implements KeyChainInterface
     }
 
     /**
-     * @param Key    $key
+     * @param Key $key
      * @param string $keyName
      *
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \ParagonIE\Halite\Alerts\CannotPerformOperation
-     * @throws \ParagonIE\Halite\Alerts\InvalidType
+     * @throws CannotPerformOperation
+     * @throws InvalidType
      */
     public function save(Key $key, string $keyName): void
     {
